@@ -12,7 +12,10 @@ def hello():
 @app.route('/cars')
 def index():
     cars = Car.query.all()
-    return jsonify(cars=[Car.serialize(car) for car in cars]), 200
+    return jsonify(cars=cars), 200
+
+    # Alternative without marshmallow-dataclass
+    # return jsonify(cars=[Car.serialize(car) for car in cars]), 200
 
 @app.route('/cars/create', methods=['POST'])
 def add_car():
@@ -31,9 +34,11 @@ def add_car():
 @app.route('/cars/edit/<int:id>', methods=['PUT'])
 def edit_car(id):
     car = Car.query.get(id)
-    car.name = request.form['name']
-    car.price = request.form['price']
-    car.image = request.form['image']
+    data = json.loads(request.data)
+    car.name = data['name']
+    car.price = data['price']
+    car.image = data['image']
+
 
     db.session.commit()
     return jsonify({"message": "Entity successfully updated"}), 200

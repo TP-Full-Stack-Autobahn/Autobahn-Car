@@ -1,7 +1,15 @@
 from src import db
+from dataclasses import dataclass
 
+
+@dataclass
 class Car(db.Model):
     __tablename__ = "cars"
+
+    id: int
+    name: str
+    price: float
+    image: str
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=False)
@@ -16,10 +24,11 @@ class Car(db.Model):
     def __repr__(self):
         return f'<Car {self.name}>'
 
-    def serialize(self):
-        return {
-            "id" : self.id,
-            "name": self.name,
-            "price": self.price,
-            "image": self.image
-        }
+    # Alternative without marshmallow-dataclass
+    # def serialize(self):
+    #     return {
+    #         "id" : self.id,
+    #         "name": self.name,
+    #         "price": self.price,
+    #         "image": self.image
+    #     }

@@ -11,6 +11,7 @@ setup(
         'flask-migrate',
         'python-dotenv',
         'flask-sqlalchemy',
-        'pymysql'
+        'pymysql',
+        "marshmallow-dataclass"
     ],
 )
