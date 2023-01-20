@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import json
 from src import app, db
 from src.models.carModel import Car
 
@@ -15,9 +16,10 @@ def index():
 
 @app.route('/cars/create', methods=['POST'])
 def add_car():
-    name = request.form['name']
-    price = request.form['price']
-    image = request.form['image']
+    data = json.loads(request.data)
+    name = data['name']
+    price = data['price']
+    image = data['image']
 
     car = Car(name=name, price=price, image=image)
     db.session.add(car)
