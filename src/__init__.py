@@ -15,6 +15,11 @@ from .models.carModel import (Car)
 # Load Controllers
 from .controllers import carController
 
+# Without migration
+# @app.before_first_request
+# def create_table():
+#     db.create_all()
+
 # Run server
 if __name__ == '__main__':
     app.run()
