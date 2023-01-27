@@ -42,7 +42,7 @@ def edit_car(id):
     car = Car.query.get(id)
 
     if car is None:
-        return jsonify({"message": "There is no car with ID: {}".format(id)}), 204
+        return jsonify({"message": "There is no car with ID: {}".format(id)}), 404
 
     data = json.loads(request.data)
     car.name = data['name']
@@ -59,7 +59,7 @@ def delete_car(id):
     car = Car.query.get(id)
 
     if car is None:
-        return jsonify({"message": "There is no car with ID: {}".format(id)}), 204
+        return jsonify({"message": "There is no car with ID: {}".format(id)}), 404
 
     db.session.delete(car)
     db.session.commit()
