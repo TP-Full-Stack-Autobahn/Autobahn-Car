@@ -20,6 +20,12 @@ def index():
 @app.route('/cars/create', methods=['POST'])
 def add_car():
     data = json.loads(request.data)
+    
+    missing_fields = [key for key in ('name', 'price', 'image') if not data.get(key)]
+
+    if missing_fields:
+        return jsonify({"message": "The following fields are missing: {}".format(', '.join(missing_fields))}), 404
+        
     name = data['name']
     price = data['price']
     image = data['image']
@@ -34,6 +40,10 @@ def add_car():
 @app.route('/cars/edit/<int:id>', methods=['PUT'])
 def edit_car(id):
     car = Car.query.get(id)
+
+    if car is None:
+        return jsonify({"message": "There is no car with ID: {}".format(id)}), 204
+
     data = json.loads(request.data)
     car.name = data['name']
     car.price = data['price']
@@ -47,6 +57,10 @@ def edit_car(id):
 @app.route('/cars/delete/<int:id>', methods=['DELETE'])
 def delete_car(id):
     car = Car.query.get(id)
+
+    if car is None:
+        return jsonify({"message": "There is no car with ID: {}".format(id)}), 204
+
     db.session.delete(car)
     db.session.commit()
     return jsonify({"message": "Entity successfully removed"}), 200
