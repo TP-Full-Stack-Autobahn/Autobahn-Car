@@ -34,7 +34,7 @@ def add_car():
     db.session.add(car)
     db.session.commit()
 
-    return jsonify({car}), 201
+    return jsonify(car), 201
 
 
 @app.route('/cars/edit/<int:id>', methods=['PUT'])
