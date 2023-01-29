@@ -34,7 +34,7 @@ def add_car():
     db.session.add(car)
     db.session.commit()
 
-    return jsonify({"message": "Entity successfully added"}), 201
+    return jsonify({car}), 201
 
 
 @app.route('/cars/edit/<int:id>', methods=['PUT'])
@@ -51,7 +51,7 @@ def edit_car(id):
 
 
     db.session.commit()
-    return jsonify({"message": "Entity successfully updated"}), 200
+    return jsonify({car}), 200
 
 
 @app.route('/cars/delete/<int:id>', methods=['DELETE'])
